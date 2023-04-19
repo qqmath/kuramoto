@@ -15,8 +15,8 @@ def plot_activity(activity):
     """
     _, ax = plt.subplots(figsize=(12, 4))
     ax.plot(np.sin(activity.T))
-    ax.set_xlabel('Time', fontsize=25)
-    ax.set_ylabel(r'$\sin(\theta)$', fontsize=25)
+    ax.set_xlabel('Time', fontsize=30)
+    ax.set_ylabel(r'$\sin(\theta)$', fontsize=30)
     return ax
 
 
@@ -31,7 +31,7 @@ def plot_phase_coherence(activity):
     """
     _, ax = plt.subplots(figsize=(8, 3))
     ax.plot([Kuramoto.phase_coherence(vec) for vec in activity.T], 'o')
-    ax.set_ylabel('Order parameter', fontsize=20)
-    ax.set_xlabel('Time', fontsize=20)
+    ax.set_ylabel('Order parameter', fontsize=25)
+    ax.set_xlabel('Time', fontsize=25)
     ax.set_ylim((-0.01, 1))
     return ax
