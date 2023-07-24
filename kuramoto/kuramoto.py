@@ -55,13 +55,12 @@ class Kuramoto:
         t: for compatibility with scipy.odeint
         '''
         assert len(angles_vec) == len(self.natfreqs) == len(adj_mat), \
-            'Input dimensions do not match, check lengths'
+                'Input dimensions do not match, check lengths'
 
         angles_i, angles_j = np.meshgrid(angles_vec, angles_vec)
         interactions = adj_mat * np.sin(angles_j - angles_i)  # Aij * sin(j-i)
 
-        dxdt = self.natfreqs + coupling * interactions.sum(axis=0)  # sum over incoming interactions
-        return dxdt
+        return self.natfreqs + coupling * interactions.sum(axis=0)
 
     def integrate(self, angles_vec, adj_mat):
         '''Updates all states by integrating state of all nodes'''
@@ -98,7 +97,7 @@ class Kuramoto:
         '''
         Compute global order parameter R_t - mean length of resultant vector
         '''
-        suma = sum([(np.e ** (1j * i)) for i in angles_vec])
+        suma = sum(np.e ** (1j * i) for i in angles_vec)
         return abs(suma / len(angles_vec))
 
     def mean_frequency(self, act_mat, adj_mat):
@@ -115,7 +114,5 @@ class Kuramoto:
 
         # Integrate all nodes over the time window T
         integral = np.sum(dxdt * self.dt, axis=1)
-        # Average across complete time window - mean angular velocity (freq.)
-        meanfreq = integral / self.T
-        return meanfreq
+        return integral / self.T
 
